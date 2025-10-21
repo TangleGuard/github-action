@@ -11,9 +11,13 @@ runs:
     - name: Download TangleGuard CLI
       shell: bash
       run: |
-        echo "Downloading CLI tool"
-        curl -L -o tangleguard-cli https://tangleguard.com/binaries/linux-x86_64/tangleguard-cli
-        echo "Making it executable"
+        echo "Downloading TangleGuard CLI..."
+        if ! curl -L -o tangleguard-cli https://nbg1.your-objectstorage.com/tangleguard/releases/latest/tangleguard-cli; then
+          echo "❌ Failed to download TangleGuard CLI"
+          exit 1
+        fi
+
+        echo "Making it executable..."
         chmod +x tangleguard-cli
         echo "Verify download"
         ls -la
