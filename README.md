@@ -1,29 +1,31 @@
-# CLI GitHub Action
+# TangleGuard CLI GitHub Action
 
-A GitHub Action that downloads the TangleGuard CLI tool and executes the `validation-all` command on the checkout repository.
+A GitHub Action that installs the TangleGuard CLI and validates interdependencies within a codebase regarding user defined rules.
 
-## Features
+The allowed dependencies are declared in `tangleguard.json` and is configurable via the TangleGuard Designer.
 
-- Automatically checks out your repository
-- Downloads TangleGuard CLI
-- Makes downloaded tools executable
+More information can be found at https://docs.tangleguard.com/
+
+## Procedure
+
+- Checks out your repository
+- Downloads TangleGuard CLI and makes it executable
 - Runs validation command
-- Fails when architecture drift is detected
+- Fails when architecture drift (dependency rule violations) are detected
 
 ## Usage
 
 ### Basic Example
 
 ```yaml
-name: Run CLI Tool
-on: [push]
+name: Architecture Check
+on: [push, pull_request]
 
 jobs:
-  run-cli:
+  validate-architecture:
     runs-on: ubuntu-latest
     steps:
-      - name: TangleGuardRun CLI tool
-        uses: ./
+      - uses: TangleGuard/github-action@main
 ```
 
 ## License
