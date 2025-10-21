@@ -1,0 +1,31 @@
+name: "TangleGuard Linter (Beta)"
+description: "Runs TangleGuard CLI to detect architecture drift"
+author: "Jan Arends"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v5
+
+    - name: Download TangleGuard CLI
+      shell: bash
+      run: |
+        echo "Downloading CLI tool"
+        curl -L -o tangleguard-cli https://tangleguard.com/binaries/linux-x86_64/tangleguard-cli
+        echo "Making it executable"
+        chmod +x tangleguard-cli
+        echo "Verify download"
+        ls -la
+
+    - name: Run TangleGuard validation
+      shell: bash
+      # working-directory: ${{ inputs.working_directory }}
+      run: |
+        echo "Running validation"
+        ./tangleguard-cli validate-all
+      id: cli_execution
+
+branding:
+  icon: "layers"
+  color: "gray-dark"
